@@ -1,0 +1,51 @@
+<div class="bg-primary py-3">
+  <div class="container">
+    <div class="d-flex justify-content-between">
+      <div class="text-white fs-2">Países favoritos</div>
+      <button
+        type="button"
+        [routerLink]="['/Country/search-countries']"
+        class="btn btn-warning"
+      >
+        Volver
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4" *ngIf="countries?.length; else noFavorites">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let country of countries">
+      <div class="card h-100 country-card">
+        <img
+          [src]="country.flags.png"
+          class="card-img-top"
+          [alt]="country.flags.alt || country.name.common"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ country.name.common }}</h5>
+        </div>
+        <div class="card-footer">
+          <button
+            (click)="deleteFavorite(country)"
+            class="btn btn-danger w-100"
+          >
+            Quitar de favoritos
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noFavorites>
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="alert alert-primary" role="alert">
+          No hay países favoritos
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

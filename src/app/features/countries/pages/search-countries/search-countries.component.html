@@ -1,0 +1,72 @@
+<div class="bg-primary py-3">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <input
+          type="text"
+          name="search"
+          [formControl]="search"
+          class="form-control rounded shadow-sm"
+          placeholder="Buscador de países"
+        />
+      </div>
+      <div class="col-md-4 d-flex justify-content-between">
+        <button
+          [routerLink]="['/Country/countries-favorites']"
+          type="button"
+          class="btn btn-link text-white"
+        >
+          Países favorito
+        </button>
+        <button type="button" class="btn btn-warning" (click)="signOut()">
+          Cerrar Sesion
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4" *ngIf="!loading; else loadingCountries">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let country of countries">
+      <div class="card h-100 country-card">
+        <img
+          [src]="country.flags.png"
+          class="card-img-top"
+          [alt]="country.flags.alt || country.name.common"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ country.name.common }}</h5>
+        </div>
+        <div class="card-footer">
+          <button
+            *ngIf="!verifyFavorite(country)"
+            (click)="addFavorite(country)"
+            class="btn btn-primary w-100"
+          >
+            Agregar a favoritos
+          </button>
+          <button
+            *ngIf="verifyFavorite(country)"
+            (click)="deleteFavorite(country)"
+            class="btn btn-danger w-100"
+          >
+            Quitar de favoritos
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingCountries>
+  <div class="container mt-4 d-flex justify-content-center align-items-center">
+    <div
+      class="spinner-border text-primary"
+      style="width: 3rem; height: 3rem"
+      role="status"
+    >
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</ng-template>
